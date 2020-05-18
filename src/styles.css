@@ -1,0 +1,10 @@
+.App {
+  font-family: sans-serif;
+}
+
+#react-app {
+  margin: auto;
+  width: 150px;
+  border: 2px solid grey;
+  padding: 1px;
+}
