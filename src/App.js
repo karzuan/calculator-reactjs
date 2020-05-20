@@ -13,7 +13,8 @@ class Keypad extends React.Component {
       //resultValue: "",
       endOfNumber: false,
       numbersArray: [],
-      operatorsArray: []
+      operatorsArray: [],
+      lastClicked: ''
     };
   }
 
@@ -21,16 +22,19 @@ class Keypad extends React.Component {
     if (this.state.endOfNumber) {
       this.setState({
         endOfNumber: false,
-        displayValue: String(digit)
+        displayValue: String(digit),
+        lastClicked: digit
       });
     } else {
       if (this.state.displayValue === "0") {
         this.setState({
-          displayValue: String(digit)
+          displayValue: String(digit),
+          lastclicked: digit
         });
       } else {
         this.setState({
-          displayValue: this.state.displayValue + String(digit)
+          displayValue: this.state.displayValue + String(digit),
+          lastclicked: digit
         });
       }
     }
@@ -52,24 +56,51 @@ class Keypad extends React.Component {
     //     numbersArray: [this.state.resultValue]
     //   }));
     // }
-    this.setState(previousState => ({
+    if(this.state.lastClicked === "=" ){
+      //let overWriteLastOperator = this.state.operatorsArray[this.state.operatorsArray.length - 1];
+      console.log('= operator');
+      this.setState(previousState => ({
+      lastClicked: operator,
+      //endOfNumber: true,
+      operatorsArray: [operator],
+      numbersArray: [this.state.displayValue]
+    }));
+  } else {
+
+      if(this.state.lastClicked === "*" || this.state.lastClicked === "-" || this.state.lastClicked === "/" || this.state.lastClicked === "+" ){
+        //let overWriteLastOperator = this.state.operatorsArray[this.state.operatorsArray.length - 1];
+        console.log('operator again');
+        var updateOperatorsArray = this.state.operatorsArray;
+        updateOperatorsArray[updateOperatorsArray.length-1] = operator;
+        console.log(updateOperatorsArray);
+        this.setState(previousState => ({
+        lastClicked: operator,
+        //endOfNumber: true,
+        operatorsArray: updateOperatorsArray
+        //numbersArray: [...previousState.numbersArray, this.state.displayValue]
+        }));
+      } else {
+      this.setState(previousState => ({
+      lastClicked: operator,
       endOfNumber: true,
       operatorsArray: [...previousState.operatorsArray, operator],
       numbersArray: [...previousState.numbersArray, this.state.displayValue]
-    }));
+      }));
     //console.log(this.state.numbersArray);
     //console.log(this.state.operatorsArray);
+    }
   }
-
+}
   equalHandler() {
     this.setState(
       previousState => ({
         endOfNumber: true,
+        lastClicked: "=",
         numbersArray: [...previousState.numbersArray, this.state.displayValue]
       }),
       () => {
         var equation = "";
-        debugger;
+        //debugger;
         for (var i = 0; i < this.state.numbersArray.length; i++) {
           equation += this.state.numbersArray[i];
           if (this.state.numbersArray[i + 1]) {
@@ -78,9 +109,10 @@ class Keypad extends React.Component {
         }
 
         equation = eval(equation);
-        // if (!Number.isInteger(equation)) {
-        //   equation = eval(equation).toFixed(4);
-        // }
+        if (!Number.isInteger(equation)) { // if the result is the number with floating point
+          equation = eval(equation).toFixed(4); // to 4 numbers after .
+          equation = parseFloat(equation); // cut off "000"'s
+        }
         this.setState({
           displayValue: equation,
           resultValue: equation
@@ -94,6 +126,7 @@ class Keypad extends React.Component {
   clearHandler() {
     this.setState({
       displayValue: "0",
+      lastClicked: "",
       //resultValue: "0",
       numbersArray: [],
       operatorsArray: []
