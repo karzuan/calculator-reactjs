@@ -2,9 +2,24 @@
   font-family: sans-serif;
 }
 
+.table{
+  border: 2px solid grey;
+}
+
 #react-app {
   margin: auto;
-  width: 150px;
-  border: 2px solid grey;
-  padding: 1px;
+  width: 30%;
+}
+
+.btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+input { 
+  text-align: right; 
+}
+
+.text-subtitle{
+  color: gray;
 }

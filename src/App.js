@@ -2,7 +2,14 @@ import React from "react";
 import "./styles.css";
 
 const Display = props => {
-  return <input type="text" disabled id="display" value={props.displayValue} />;
+  return (
+  <tr>
+            <td colspan="4">
+            <input type="text" readonly id="display" className="form-control" value={props.displayValue} />
+            </td>
+  </tr>
+  )
+
 };
 
 class Keypad extends React.Component {
@@ -159,62 +166,40 @@ class Keypad extends React.Component {
   render() {
     return (
       <div id="Calculator">
-        <Display displayValue={this.state.displayValue} />
-        <button onClick={() => this.clearHandler()} id="clear">
-          C
-        </button>
-        <button id="decimal" onClick={() => this.dotHandler()}>
-          .
-        </button>
-        <button id="equals" onClick={() => this.equalHandler()}>
-          =
-        </button>
-        <br />
-        <button id="one" onClick={() => this.inputDigitHandler(1)}>
-          1
-        </button>
-        <button id="two" onClick={() => this.inputDigitHandler(2)}>
-          2
-        </button>
-        <button id="three" onClick={() => this.inputDigitHandler(3)}>
-          3
-        </button>
-        <br />
-        <button id="four" onClick={() => this.inputDigitHandler(4)}>
-          4
-        </button>
-        <button id="five" onClick={() => this.inputDigitHandler(5)}>
-          5
-        </button>
-        <button id="six" onClick={() => this.inputDigitHandler(6)}>
-          6
-        </button>
-        <br />
-        <button id="seven" onClick={() => this.inputDigitHandler(7)}>
-          7
-        </button>
-        <button id="eight" onClick={() => this.inputDigitHandler(8)}>
-          8
-        </button>
-        <button id="nine" onClick={() => this.inputDigitHandler(9)}>
-          9
-        </button>
-        <button id="zero" onClick={() => this.inputDigitHandler(0)}>
-          0
-        </button>
-        <br />
-        <button id="divide" onClick={() => this.operatorHandler("/")}>
-          /
-        </button>
-        <button id="subtract" onClick={() => this.operatorHandler("-")}>
-          -
-        </button>
-        <button id="multiply" onClick={() => this.operatorHandler("*")}>
-          *
-        </button>
-        <button id="add" onClick={() => this.operatorHandler("+")}>
-          +
-        </button>
+        <table className="table table-dark">
+          <thead>
+            <Display displayValue={this.state.displayValue} />
+          </thead>
+          <tbody>
+            <tr>
+              <td colspan="3"><button type="button" id="clear" onClick={() => this.clearHandler()} className="btn btn-danger btn-block">C</button></td>
+              <td><button id="divide" onClick={() => this.operatorHandler("/")} type="button" className="btn btn-warning btn-block">/</button></td>
+            </tr>
+            <tr>
+              <td><button id="seven" onClick={() => this.inputDigitHandler(7)} type="button" className="btn btn-light btn-block">7</button></td>
+              <td><button id="eight" onClick={() => this.inputDigitHandler(8)} type="button" className="btn btn-light btn-block">8</button></td>
+              <td><button id="nine" onClick={() => this.inputDigitHandler(9)} type="button" className="btn btn-light btn-block">9</button></td>
+              <td><button id="multiply" onClick={() => this.operatorHandler("*")} type="button" className="btn btn-warning btn-block">*</button></td>
+            </tr>
+            <tr>
+              <td><button id="four" onClick={() => this.inputDigitHandler(4)} type="button" className="btn btn-light btn-block">4</button></td>
+              <td><button id="five" onClick={() => this.inputDigitHandler(5)} type="button" className="btn btn-light btn-block">5</button></td>
+              <td><button id="six" onClick={() => this.inputDigitHandler(6)} type="button" className="btn btn-light btn-block">6</button></td>
+              <td><button id="subtract" onClick={() => this.operatorHandler("-")} type="button" className="btn btn-warning btn-block">-</button></td>
+            </tr>
+            <tr>
+              <td><button id="one" onClick={() => this.inputDigitHandler(1)} type="button" className="btn btn-light btn-block">1</button></td>
+              <td><button id="two" onClick={() => this.inputDigitHandler(2)} type="button" className="btn btn-light btn-block">2</button></td>
+              <td><button id="three" onClick={() => this.inputDigitHandler(3)} type="button" className="btn btn-light btn-block">3</button></td>
+              <td><button id="add" type="button" onClick={() => this.operatorHandler("+")} className="btn btn-warning btn-block">+</button></td>
+            </tr>
+            <tr>
+              <td colspan="2"><button id="zero" onClick={() => this.inputDigitHandler(0)} type="button" className="btn btn-light btn-block">0</button></td>
+              <td><button id="decimal" onClick={() => this.dotHandler()} type="button" className="btn btn-light btn-block">.</button></td>
+              <td><button id="equals" onClick={() => this.equalHandler()} type="button" className="btn btn-success btn-block">=</button></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     );
   }
